@@ -1,4 +1,4 @@
-let values = ''
+let values = '' // useState
 const data = [];
 
 
@@ -26,17 +26,21 @@ function submitEvent() {
 
     axios.post("https://emis-server.onrender.com/contact-lists", objectPayload)
         .then(res => {
+            getDataAndDisplay()
             console.log(res);
         }).catch(err => {
             console.log(err);
         })
+}
+
+document.addEventListener("DOMContentLoaded", getDataAndDisplay) // useEffect
 
 
-
+function getDataAndDisplay() {
     axios.get("https://emis-server.onrender.com/contact-lists")
         .then(res => {
             console.log(res);
-           const data = res.data;
+            const data = res.data;
             displayData(data);
         }).catch(err => {
             console.log(err);
@@ -47,11 +51,9 @@ function submitEvent() {
         dataList.innerHTML = "";
         data.forEach((item) => {
             let listItem = document.createElement("li");
+            listItem.classList.add("list-group-item");
             listItem.textContent = `Name: ${item.firstName} ${item.lastName}, Phone: ${item.phoneNumber}, Email: ${item.email}, Message: ${item.message}`;
             dataList.appendChild(listItem);
         });
     }
 }
-
-
-
