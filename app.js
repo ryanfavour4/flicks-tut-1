@@ -36,17 +36,17 @@ function submitEvent() {
     axios.get("https://emis-server.onrender.com/contact-lists")
         .then(res => {
             console.log(res);
-            data = res.data;
-            displayData();
+           const data = res.data;
+            displayData(data);
         }).catch(err => {
             console.log(err);
         })
 
-    function displayData() {
-        const dataList = document.getElementById("data-list");
-        dataList.innerHTML = dataList.textContent;
+    function displayData(data) {
+        let dataList = document.getElementById("data-list");
+        dataList.innerHTML = "";
         data.forEach((item) => {
-            const listItem = document.createElement("li");
+            let listItem = document.createElement("li");
             listItem.textContent = `Name: ${item.firstName} ${item.lastName}, Phone: ${item.phoneNumber}, Email: ${item.email}, Message: ${item.message}`;
             dataList.appendChild(listItem);
         });
